@@ -6,6 +6,7 @@
 * edit DESCRIPTION: linear unbiased estimators
 * edit citation
 * vignette
+* installation workflow via `install_github`
 
 
 For an exact solution, we strongly recommend running designmatch either with CPLEX or Gurobi.  
