@@ -3,10 +3,12 @@
 
 ### to do: 
 
-* edit DESCRIPTION: linear unbiased estimators
-* edit citation
-* vignette
-* installation workflow via `install_github`
+1. edit DESCRIPTION: linear unbiased estimators
+2. edit citation
+3. vignette
+4. installation workflow via `install_github`
+  * see devtools package: https://www.rdocumentation.org/packages/devtools/versions/1.12.0
+  * install_github: https://www.rdocumentation.org/packages/devtools/versions/1.12.0/topics/install\_github
 
 
 For an exact solution, we strongly recommend running designmatch either with CPLEX or Gurobi.  

@@ -1,0 +1,9 @@
+bibentry(bibtype= "Article",
+         title="Confidence intervals for linear unbiased estimators under constrained dependence",
+	       author=c(person(c("Peter M.", "Aronow")),
+	                person(c("Forrest W.", "Crawford")),
+	                person(c("Jos\'e R.", "Zubizarreta"))),
+         year = "2017",
+	       journal = "arXiv:1602.00359",
+         url = "https://arxiv.org/abs/1602.00359"
+	 )
