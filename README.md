@@ -10,6 +10,9 @@
   * see devtools package: https://www.rdocumentation.org/packages/devtools/versions/1.12.0
   * install_github: https://www.rdocumentation.org/packages/devtools/versions/1.12.0/topics/install\_github
 
+This package implements the methods described in 
+> 
+
 
 For an exact solution, we strongly recommend running designmatch either with CPLEX or Gurobi.  
 
