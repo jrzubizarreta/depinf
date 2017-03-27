@@ -1,0 +1,179 @@
+---
+title: "Confidence intervals for linear unbiased estimators under constrained dependence"
+author: "Peter M. Aronow, Forrest W. Crawford, and Jose R. Zubizarreta"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+# Confidence intervals for linear unbiased estimators under constrained dependence
+
+In this vignette, we replicate the main analyses in Section 5 of the paper.
+
+```{r}
+########################
+# Read packages
+
+library("slam")
+library("Rglpk")
+library("gurobi")
+library("sandwich")
+library("lmtest")
+library("depinf")
+
+########################
+# Load data
+
+load("Russia_sathcap.Rsave")
+
+########################
+# Initialize basic variables
+
+Y = cycle1$hiv
+X = cycle1[,c("hcv","age","sex")]
+
+n = length(Y)
+
+# GR is the known elements of the adjacency matrix 
+
+# find the recruitment degree of each subject
+dr = apply(GR, 1, sum)
+
+# if any total degree is less than the recruitment degree, correct it
+cycle1$degree_corrected = pmax(cycle1$degree, dr)
+d = cycle1$degree_corrected
+
+########################
+# Add an intercept 
+
+X = as.matrix(cbind(1, X))
+
+########################
+# Calculate the Theta matrix 
+
+Theta = solve(t(X)%*%X, t(X))
+
+betahat = Theta %*% Y
+
+########################
+# Get the lm confidence intervals
+
+linfit = lm(Y ~ hcv + age + sex, data = as.data.frame(X))
+
+print(summary(linfit))
+
+########################
+# Get the naive and robust confidence intervals
+
+# Naive
+lmfit = lm(Y ~ X)
+summary(lmfit)                                  
+
+# Robust (Stata default)
+coeftest(lmfit, vcov = vcovHC(lmfit, "HC1"))[, 2]
+
+########################
+# Build table
+
+# Regression coefficients
+col1 = betahat
+# Naive standard errors
+col2 = coef(summary(lmfit))[, 2]
+# Robust standard errors
+col3 = coeftest(lmfit, vcov = vcovHC(lmfit, "HC1"))[, 2]
+
+dr = apply(GR, 1, sum)
+cycle1$degree_corrected = pmax(cycle1$degree, dr)
+d = cycle1$degree_corrected
+
+# V1, no known dependencies (no GR)
+a1 = sqrt(depvar(Y, Theta[1, ]*n, d, NULL, case = "heteroskedastic", solver = "gurobi", approximate = 0)$V_hat)
+a2 = sqrt(depvar(Y, Theta[2, ]*n, d, NULL, case = "heteroskedastic", solver = "gurobi", approximate = 0)$V_hat)
+a3 = sqrt(depvar(Y, Theta[3, ]*n, d, NULL, case = "heteroskedastic", solver = "gurobi", approximate = 0)$V_hat)
+a4 = sqrt(depvar(Y, Theta[4, ]*n, d, NULL, case = "heteroskedastic", solver = "gurobi", approximate = 0)$V_hat)
+col4 = c(a1, a2, a3, a4)
+
+# V1, some known dependencies
+b1 = sqrt(depvar(Y, Theta[1, ]*n, d, GR, case = "heteroskedastic", solver = "gurobi", approximate = 0)$V_hat)
+b2 = sqrt(depvar(Y, Theta[2, ]*n, d, GR, case = "heteroskedastic", solver = "gurobi", approximate = 0)$V_hat)
+b3 = sqrt(depvar(Y, Theta[3, ]*n, d, GR, case = "heteroskedastic", solver = "gurobi", approximate = 0)$V_hat)
+b4 = sqrt(depvar(Y, Theta[4, ]*n, d, GR, case = "heteroskedastic", solver = "gurobi", approximate = 0)$V_hat)
+col5 = c(b1, b2, b3, b4)
+
+# V2, some known dependencies
+c1 = sqrt(depvar(Y, Theta[1, ]*n, d, GR, case = "homoskedastic", solver = "gurobi", approximate = 0)$V_hat)
+c2 = sqrt(depvar(Y, Theta[2, ]*n, d, GR, case = "homoskedastic", solver = "gurobi", approximate = 0)$V_hat)
+c3 = sqrt(depvar(Y, Theta[3, ]*n, d, GR, case = "homoskedastic", solver = "gurobi", approximate = 0)$V_hat)
+c4 = sqrt(depvar(Y, Theta[4, ]*n, d, GR, case = "homoskedastic", solver = "gurobi", approximate = 0)$V_hat)
+col6 = c(c1, c2, c3, c4)
+
+# V2'
+d1 = sqrt(depvar(Y, Theta[1, ]*n, d, NULL, case = "homoskedastic")$V_hat)
+d2 = sqrt(depvar(Y, Theta[2, ]*n, d, NULL, case = "homoskedastic")$V_hat)
+d3 = sqrt(depvar(Y, Theta[3, ]*n, d, NULL, case = "homoskedastic")$V_hat)
+d4 = sqrt(depvar(Y, Theta[4, ]*n, d, NULL, case = "homoskedastic")$V_hat)    		
+col7 = c(d1, d2, d3, d4)
+ 
+tab = cbind(col1, col2, col3, col4, col5, col6, col7)
+tab
+
+########################
+# Sensitivity analysis: solve for V1, V2 and V2' for d = cycle1$degree_corrected + k
+
+for (j in 1:4) {
+	
+	#for (k in 0:(n-1)) {
+	for (k in 0:2) {		
+	
+		cat("Coefficient ", j-1, ", iteration ", k, "\n", sep="")
+
+		# V1
+		out1 = depvar(y = Y, theta = Theta[j, ]*n, d = pmin(d+k, n-1), GR = GR, case = "heteroskedastic", solver = "gurobi", approximate = 1)
+
+		# V2
+		out2 = depvar(y = Y, theta = Theta[j, ]*n, d = pmin(d+k, n-1), GR = GR, case = "homoskedastic", solver = "gurobi", approximate = 1)
+
+		# V2'
+		x = Y*Theta[j, ]*n
+		out3 = var(x)/n * (1 + sum(pmin(d+k, n-1))/n)
+
+		aux1 = c(sqrt(out1$V_hat), betahat[j]-1.96*sqrt(out1$V_hat), betahat[j]+1.96*sqrt(out1$V_hat))
+		aux2 = c(sqrt(out2$V_hat), betahat[j]-1.96*sqrt(out2$V_hat), betahat[j]+1.96*sqrt(out2$V_hat))
+		aux3 = c(sqrt(out3), betahat[j]-1.96*sqrt(out3), betahat[j]+1.96*sqrt(out3)) 
+
+		temp = rbind(aux1, aux2, aux3)
+		rownames(temp) = c(paste("V1, k =", k, sep = " "), paste("V2, k =", k, sep = " "), paste("V2', k =", k, sep = " "))
+		colnames(temp) = c("s.e", "(", ")")
+	
+		if (k == 0) {
+			tab = temp
+		}
+		else {
+			tab = rbind(tab, temp)
+		}
+	}
+	assign(paste('tab_beta', j-1, sep=''), tab)
+}
+
+tab_approx = tab
+
+sink("tab_approx.txt")
+
+cat("Intercept", "\n")
+tab_beta0
+
+cat("\n", "Beta 1", "\n")
+tab_beta1
+
+cat("\n", "Beta 2", "\n")
+tab_beta2
+
+cat("\n", "Beta 3", "\n")
+tab_beta3
+
+save(tab_beta0, tab_beta1, tab_beta2, tab_beta3, file = "tab_approx.RData")
+```
