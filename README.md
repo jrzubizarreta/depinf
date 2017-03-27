@@ -12,7 +12,7 @@ To install the package, run:
 To get started, run:
 ~~~
   load("depinf")
-  vignette(???)
+  vignette("replication", package="depinf")
 ~~~
 The citation is: 
 ~~~
