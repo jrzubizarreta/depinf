@@ -38,4 +38,4 @@ Replication materials for the regression analysis of the risk factors associated
 
 ## Solver Details
 
-The software is compatible with solvers implemented in external R packages GLPK ("glpk", free), Gurobi ("gurobi", recommended), and CPLEX ("cplex"). By default, the package uses `glpk` which requires no additional setup or license. For installation of Gurobi, including the necessary associated R package (with free academic license), visit [Gurobi](http://www.gurobi.com) with instructions [here](http://www.gurobi.com/documentation/6.0/quickstart_windows/creating_a_new_academic_li.html).
+The software is compatible with solvers implemented in external R packages GLPK ("glpk", free), Gurobi ("gurobi", recommended), and CPLEX ("cplex"). By default, the package uses `glpk` which requires no additional setup or license. For installation of Gurobi, including the necessary associated R package (with free academic license), visit [Gurobi](http://www.gurobi.com). 

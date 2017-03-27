@@ -1,4 +1,7 @@
 R/.Rapp.history
+.Rapp.history
 R/.Rhistory
+inst/doc
+*.swp
 README.html
 .DS_Store

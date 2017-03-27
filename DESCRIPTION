@@ -6,7 +6,8 @@ Date: 2017-01-20
 Author: Peter M. Aronow <peter.aronow@yale.edu>, Forrest W. Crawford <forrest.crawford@yale.edu>, Jose R. Zubizarreta <zubizarreta@columbia.edu>
 Maintainer: Peter M. Aronow <peter.aronow@yale.edu>, Forrest W. Crawford <forrest.crawford@yale.edu>, Jose R. Zubizarreta <zubizarreta@columbia.edu>
 Depends: R (>= 3.2), slam, Rglpk
-Suggests: gurobi, Rcplex
+Suggests: gurobi, Rcplex, knitr, rmarkdown
+VignetteBuilder: knitr
 SystemRequirements: GLPK library package (e.g., libglpk-dev on Debian/Ubuntu)
 License: GPL-2 | GPL-3
 Description: Includes functions for the construction of confidence intervals for means from observations with unknown but constrained dependence.

@@ -9,7 +9,10 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-Here we replicate the main analyses in Section 5 of the paper.
+
+# Confidence intervals for linear unbiased estimators under constrained dependence
+
+In this vignette, we replicate the main analyses in Section 5 of the paper.
 
 ```{r}
 ########################
@@ -36,7 +39,11 @@ X = cycle1[,c("hcv","age","sex")]
 n = length(Y)
 
 # GR is the known elements of the adjacency matrix 
+
+# find the recruitment degree of each subject
 dr = apply(GR, 1, sum)
+
+# if any total degree is less than the recruitment degree, correct it
 cycle1$degree_corrected = pmax(cycle1$degree, dr)
 d = cycle1$degree_corrected
 
