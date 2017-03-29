@@ -18,19 +18,19 @@ If you use this package, please cite the article by Aronow, Crawford, Zubizarret
 ~~~
   citation(package="depinf")
 
-  Peter M. Aronow, Forrest W. Crawford and Jos'e R. Zubizarreta (2017).
-  "Confidence intervals for linear unbiased estimators under constrained
-  dependence." _arXiv:1602.00359_. <URL: https://arxiv.org/abs/1602.00359>.
+  Peter M. Aronow, Forrest W. Crawford and Jos'e R. Zubizarreta (2017). “Confidence intervals for
+  linear unbiased estimators under constrained dependence.” _arXiv:1602.00359_. <URL:
+  https://arxiv.org/abs/1602.00359>.
 
-  A BibTeX entry for LaTeX users is
+  Linda M. Niccolai, O. V. Toussova, S. V. Verevochkin, R. Barbour, R. Heimer and A. P. Kozlov
+  (2010). “High HIV prevalence, suboptimal HIV testing, and low knowledge of HIV-positive
+  serostatus among injection drug users in St. Petersburg, Russia.” _AIDS and Behavior_, *14*, pp.
+  932-941.
 
-  @Article{,
-    title = {Confidence intervals for linear unbiased estimators under constrained dependence},
-    author = {{Peter M. Aronow} and {Forrest W. Crawford} and {Jos'e R. Zubizarreta}},
-    year = {2017},
-    journal = {arXiv:1602.00359},
-    url = {https://arxiv.org/abs/1602.00359},
-  }
+  M. Y. Iguchi, A. J. Ober, S. H. Berry, T. Fain, D. D. Heckathorn, P. M. Gorbach, R. Heimer, A.
+  Kozlov, L. J. Oullet, S. Shoptaw and W. A. Zule (2009). “Simultaneous recruitment of drug users
+  and men who have sex with men in the United States and Russia using respondent-driven sampling:
+  sampling methods and implications.” _Journal of Urban Health_, *86*, pp. 5-31.
   
 ~~~
 
