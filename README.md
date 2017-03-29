@@ -14,7 +14,7 @@ To get started, run:
   load("depinf")
   vignette("replication", package="depinf")
 ~~~
-The citation is: 
+If you use this package, please cite the article by Aronow, Crawford, Zubizarreta below.  If you use the dataset contained in this package, please cite the articles by Niccolai et al. and Iguchi et al. 
 ~~~
   citation(package="depinf")
 

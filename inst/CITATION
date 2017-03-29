@@ -7,3 +7,38 @@ bibentry(bibtype= "Article",
 	       journal = "arXiv:1602.00359",
          url = "https://arxiv.org/abs/1602.00359"
 	 )
+
+bibentry(bibtype= "Article",
+         title="High HIV prevalence, suboptimal HIV testing, and low knowledge of HIV-positive serostatus among injection drug users in St. Petersburg, Russia.", 
+	       author=c(person(c("Linda M.", "Niccolai")),
+	                person(c("O. V.", "Toussova")),
+	                person(c("S. V.", "Verevochkin")),
+	                person(c("R.", "Barbour")),
+	                person(c("R.", "Heimer")),
+	                person(c("A. P.", "Kozlov"))),
+         year = "2010",
+	       journal = "AIDS and Behavior",
+         volume = "14",
+         pages = "932-941"
+	 )
+
+
+bibentry(bibtype="Article",
+         title = "Simultaneous recruitment of drug users and men who have sex with men in the United States and Russia using respondent-driven sampling: sampling methods and implications.",
+         author=c(person(c("M. Y.", "Iguchi")),
+                  person(c("A. J.", "Ober")),
+                  person(c("S. H.", "Berry")),
+                  person(c("T.", "Fain")),
+                  person(c("D. D.", "Heckathorn")),
+                  person(c("P. M.", "Gorbach")),
+                  person(c("R.", "Heimer")),
+                  person(c("A.", "Kozlov")),
+                  person(c("L. J.", "Oullet")),
+                  person(c("S.", "Shoptaw")),
+                  person(c("W. A.", "Zule"))),
+          year = "2009",
+          journal = "Journal of Urban Health",
+          volume = "86",
+          pages = "5-31"
+      )
+
